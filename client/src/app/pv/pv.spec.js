@@ -10,7 +10,8 @@ describe('client.pv module ', function() {
         pvDataService,
         scope,
         $httpBackend,
-        pvRequestHandler;
+        pvFetchHandler,
+        pvSaveHandler;
 
     beforeEach(inject(function(_$controller_,_pvDataService_,$rootScope) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
@@ -50,7 +51,7 @@ describe('client.pv module ', function() {
         // Set up the mock http service responses
         $httpBackend = $injector.get('$httpBackend');
         // backend definition common for all tests
-        pvRequestHandler = $httpBackend.when('POST', '/api/v1/preparePV',{circ:1,deleg:1,subDeleg:1,center:1,station:1})
+        pvFetchHandler = $httpBackend.when('POST', '/api/v1/preparePv',{circ:1,deleg:1,subDeleg:1,center:1,station:1})
                               .respond({id: '12345'});
       }));
 
@@ -60,7 +61,7 @@ describe('client.pv module ', function() {
       });
 
       it('should fetch pv', function() {
-        $httpBackend.expectPOST('/api/v1/preparePV',{circ:1,deleg:1,subDeleg:1,center:1,station:1});
+        $httpBackend.expectPOST('/api/v1/preparePv',{circ:1,deleg:1,subDeleg:1,center:1,station:1});
         pvDataService.getPv(1,2,3,4,5);
         $httpBackend.flush();
       });
@@ -69,14 +70,20 @@ describe('client.pv module ', function() {
 
         var controller = $controller('pvController',{$scope:scope});
         // Notice how you can change the response even after it was set
-        pvRequestHandler.respond(400, '');
-        $httpBackend.expectPOST('/api/v1/preparePV',{circ:1,deleg:1,subDeleg:1,center:1,station:1});
+        pvFetchHandler.respond(400, '');
+        $httpBackend.expectPOST('/api/v1/preparePv',{circ:1,deleg:1,subDeleg:1,center:1,station:1});
         pvDataService.getPv(1,2,3,4,5);
         $httpBackend.flush();
         expect(scope.pvStatus).toEqual('NOTFOUND');
       });
 
-
+      it('should create new pv', function() {
+        pvRequestHandler.respond(200, '');
+        var controller = $controller('pvController', {$scope:scope});
+        $httpBackend.expectPOST('/api/v1/pv/createPv', scope.pvTemplate);
+        pvDataService.savePv(1,2,3,4,5);
+        $httpBackend.flush();
+      });
 
     });
 
