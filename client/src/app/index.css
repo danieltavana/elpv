@@ -12,3 +12,24 @@
 .thumbnail img.pull-right {
   width: 50px;
 }
+
+.arabic {
+  float:right;
+}
+.row{
+  margin-top:20px;
+  direction:rtl;
+}
+.arabic input[type="submit"] {
+  margin-top:15px;
+}
+.ng-invalid {
+  border-color:#DB142B;
+  border-width: 1px;
+  border-style: solid;
+}
+.ng-valid {
+  border-color:#14DB62;
+  border-width: 1px;
+  border-style: solid;
+}

@@ -1,0 +1,38 @@
+<div class="container">
+
+  <div ng-include="'components/navbar/navbar.html'"></div>
+  <div class="row">
+    <div class="col-md-3 arabic">
+      الدائرة الانتخابية
+       <label >{{pvTemplate.circName}}</label></div>
+    <div class="col-md-9 arabic">
+      مركز الاقتراع
+      <h2>{{pvTemplate.centerName}}</h2></div>
+  </div>
+    <div class="row">
+      <form name="getform" novalidate>
+      <div class="col-md-2 arabic"> مكتب الاقتراع
+        <input type='number'   ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.station'  /></div>
+      <div class="col-md-2 arabic">
+        مركز الاقتراع
+        <input type='number'   ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.center'  /></div>
+      <div class="col-md-2 arabic">
+        العمادة  <input type='number'   ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.subDeleg' /></div>
+      <div class="col-md-2 arabic"> المعتمدية
+       <input type='number'  ng-pattern="/^[0-9]{1,7}$/"  required  ng-model='pvTemplate.deleg' /> </div>
+      <div class="col-md-2 arabic"> الدائرة الانتخابية
+       <input ng-model='pvTemplate.circ'   type='number'   ng-pattern="/^[0-9]{1,7}$/" required /></div>
+      <div class="col-md-2 arabic"><input type='submit' class="btn btn-success unique-submit arabic"  ng-click='getPv()'/></div>
+    </form>
+    </div>
+
+  <hr>
+  <div class="pv-container" ng-if="pvStatus =='FOUND'">
+
+
+  </div>
+  <div class="footer">
+    <p>With ♥ </p>
+  </div>
+
+</div>
