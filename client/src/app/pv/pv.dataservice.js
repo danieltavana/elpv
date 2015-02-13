@@ -1,12 +1,20 @@
 'use strict';
 
 angular.module('client.pv',[])
-.factory('PvDataService', function () {
+.factory('PvDataService',['$q','$http', function ($q, $http) {
   return{
-    getPv :function(){
-      return {hello:'rad'};
+    getPv :function(id){
+      var deferred = $q.defer(),
+          httpPromise = $http.post('/api/v1/pv/preparePV',id);
+      httpPromise.then(function(response) {
+        deferred.resolve(response);
+        }, function(error) {
+           deferred.reject(error);
+        });
+
+      return deferred.promise;
     }
 
   }
 
-});
+}]);
