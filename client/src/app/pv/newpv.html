@@ -4,32 +4,214 @@
   <div class="row">
     <div class="col-md-3 arabic">
       الدائرة الانتخابية
-       <label >{{pvTemplate.circName}}</label></div>
+      <label>{{pvTemplate.circName}}</label>
+    </div>
     <div class="col-md-9 arabic">
       مركز الاقتراع
-      <h2>{{pvTemplate.centerName}}</h2></div>
+      <h2>{{pvTemplate.centerName}}</h2>
+    </div>
   </div>
-    <div class="row">
-      <form name="getform" novalidate>
+  <div class="row">
+    <form name="getpv" novalidate>
       <div class="col-md-2 arabic"> مكتب الاقتراع
-        <input type='number'   ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.station'  /></div>
+        <input type='number' ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.station' />
+      </div>
       <div class="col-md-2 arabic">
         مركز الاقتراع
-        <input type='number'   ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.center'  /></div>
+        <input type='number' ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.center' />
+      </div>
       <div class="col-md-2 arabic">
-        العمادة  <input type='number'   ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.subDeleg' /></div>
+        العمادة
+        <input type='number' ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.subDeleg' />
+      </div>
       <div class="col-md-2 arabic"> المعتمدية
-       <input type='number'  ng-pattern="/^[0-9]{1,7}$/"  required  ng-model='pvTemplate.deleg' /> </div>
+        <input type='number' ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.deleg' /> </div>
       <div class="col-md-2 arabic"> الدائرة الانتخابية
-       <input ng-model='pvTemplate.circ'   type='number'   ng-pattern="/^[0-9]{1,7}$/" required /></div>
-      <div class="col-md-2 arabic"><input type='submit' class="btn btn-success unique-submit arabic"  ng-click='getPv()'/></div>
+        <input ng-model='pvTemplate.circ' type='number' ng-pattern="/^[0-9]{1,7}$/" required />
+      </div>
+      <div class="col-md-2 arabic">
+        <input type='submit' class="btn btn-success unique-submit arabic" ng-click='getPv()' />
+      </div>
     </form>
-    </div>
+  </div>
 
   <hr>
   <div class="messages">
     {{message}}</div>
+  <div class="pv-container" ng-if="pvStatus =='NOTFOUND'">
+    NOT FOUND
+
+  </div>
   <div class="pv-container" ng-if="pvStatus =='FOUND'">
+    <form novalidate name="prep" ng-init="setFormScope(this)">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 arabic">يوجد ختم الهيئة؟
+            <input type="checkbox" ng-model="pvTemplate.tampon">
+            <br/> </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-3 arabic">
+            <div>عدد الناخبين المرسمين بمكتب الاقتراع
+              <input ng-model='pvTemplate.registeredVoters' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+          <div class="col-md-3 arabic">
+            <div>أ- عدد الناخبين الذين امضوا في قائمة الناخبين
+              <input ng-model='pvTemplate.aSigningVoters' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+          <div class="col-md-2 arabic">
+            <div>ب- عدد أوراق التصويت المسلمة لمكتب الاقتراع
+              <input ng-model='pvTemplate.bDeliveredBallots' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+          <div class="col-md-2 arabic">
+            <div>ج- عدد أوراق التصويت التالفة
+              <input ng-model='pvTemplate.cSpoiledBallots' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+          <div class="col-md-2 arabic">
+            <div>د- عدد أوراق التصويت الباقية
+              <input ng-model='pvTemplate.dLeftBallots' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-3 arabic">
+            <div>ه- عدد أوراق التصويت التالفة + عدد أوراق التصويت الباقية
+              <input ng-model='pvTemplate.eCplusD' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+          <div class="col-md-3 arabic">
+            <div>و- عدد أوراق التصويت المستخرجة من الصندوق
+              <input ng-model='pvTemplate.fExtractedBallots' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+          <div class="col-md-2 arabic">
+            <div>ز=ه+و
+              <input ng-model='pvTemplate.gEplusF' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+          <div class="col-md-2 arabic">
+            <div>ح- المطابقة 1 : الفارق العددي بين ب و- ز
+              <input ng-model='pvTemplate.hBminusG' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+          <div class="col-md-2 arabic">
+            <div>ط- المطابقة 2 : الفارق العددي بين أ و و
+              <input ng-model='pvTemplate.iAminusF' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row arabic">
+          <div class="col-md-12">
+            <div>أسباب عدم التطابق في ح إن وجد
+              <input ng-model='pvTemplate.hReasons' type='text' style="width: 100%;" />
+            </div>
+          </div>
+        </div>
+        <div class="row arabic">
+          <div class="col-md-12">
+            <div>أسباب عدم التطابق في ط إن وجد
+              <input ng-model='pvTemplate.iReasons' style="width: 100%;" type='text' />
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+      <div class="row arabic">
+        <h3>القائمات</h3>
+        <ul class="lists">
+          <li ng-repeat="list in pvTemplate.lists" class="list">
+            <div class="row">
+
+              <div class="right">
+                <label>{{list.number}}</label>
+              </div>
+              <div class="right">
+                <label class="med-label">{{list.name}}</label>
+              </div>
+              <div class="right">
+                <input ng-model='list.voteCast' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <hr>
+        <div class="row">
+          <div class="col-md-3 arabic">
+            <div>ي- الأصوات المصرح بها لكل القائمات
+              <input ng-model='pvTemplate.jListVotes' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+          <div class="col-md-3 arabic ">
+            <div>ك- عدد أوراق التصويت الملغاة
+              <input ng-model='pvTemplate.kCancelledVotes' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+
+          <div class="col-md-2 arabic">
+            <div>ل- عدد أوراق التصويت البيضاء
+              <input ng-model='pvTemplate.lBlankVotes' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+
+          <div class="col-md-2 arabic">
+            <div>م) المجموع = ي+ ك+ ل
+              <input ng-model='pvTemplate.mJplusKplusL' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+
+          <div class="col-md-2 arabic">
+            <div>ن- المطابقة 3 : الفارق العددي بين و و م
+              <input ng-model='pvTemplate.nFminusM' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
+            </div>
+          </div>
+
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-8 right"> أسباب عدم التطابق في ن إن وجد
+            <input ng-model='pvTemplate.nReasons' type='text' / style="width: 100%;">
+          </div>
+          <div class="col-md-2 arabic">
+            <div>توقيت بداية الفرز
+              <input ng-model='pvTemplate.countingStart' type='text' />
+            </div>
+          </div>
+          <div class="col-md-2 arabic">
+            <div>توقيت ختم الفرز
+              <input ng-model='pvTemplate.countingEnd' type='text' />
+            </div>
+          </div>
+
+        </div>
+        <hr>
+        <div class="row arabic">
+          <h3>ممثلي الأحزاب</h3>
+
+          <ul class="lists">
+            <li ng-repeat="signature in signatures" class="list">
+              <select ng-model="signature.list" ng-options="list.name for list in pvTemplate.lists">
+                Signatures:
+                <input ng-model="signature.signaturesCount"> [
+                <a href ng-click="signatures.splice($index, 1)">X</a>]
+            </li>
+            <li>
+              [<a href ng-click="signatures.push({})">ADD</a>]
+            </li>
+          </ul>
+        </div>
+        <input type='submit' ng-click='savePv()' ng-disabled="isSaving" />
+      </div>
+    </form>
 
 
   </div>

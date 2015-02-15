@@ -11,7 +11,6 @@ angular.module('client', ['ngAnimate', 'ngRoute', 'ui.bootstrap','client.pv'])
         templateUrl: 'app/pv/newpv.html',
         controller: 'PvController'
       })
-
       .otherwise({
         redirectTo: '/'
       });

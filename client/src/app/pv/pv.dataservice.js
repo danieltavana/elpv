@@ -5,7 +5,8 @@ angular.module('client.pv',[])
   return{
     getPv :function(id){
       var deferred = $q.defer(),
-          httpPromise = $http.post('/api/v1/pv/preparePV',id);
+          httpPromise = $http.post('http://localhost:1337/api/v1/pv/preparePv',id);
+
       httpPromise.then(function(response) {
         deferred.resolve(response);
         }, function(error) {
