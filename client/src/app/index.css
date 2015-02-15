@@ -19,6 +19,8 @@
 .row{
   margin-top:20px;
   direction:rtl;
+  margin-left:0 !important;
+  margin-right:0 !important;
 }
 .arabic input[type="submit"] {
   margin-top:15px;
@@ -32,4 +34,15 @@
   border-color:#14DB62;
   border-width: 1px;
   border-style: solid;
+}
+.input-form{
+  overflow: hidden;
+  padding: 20px;
+}
+ul.lists {
+  list-style-type: none;
+}
+.right {
+  float: right;
+  margin-left: 15px;
 }

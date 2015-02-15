@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="row">
-    <form name="getpv" novalidate>
+    <form name="getpv"  class="input-form" novalidate>
       <div class="col-md-2 arabic"> مكتب الاقتراع
         <input type='number' ng-pattern="/^[0-9]{1,7}$/" required ng-model='pvTemplate.station' />
       </div>
@@ -39,12 +39,10 @@
   <div class="messages">
     {{message}}</div>
   <div class="pv-container" ng-if="pvStatus =='NOTFOUND'">
-    NOT FOUND
-
   </div>
   <div class="pv-container" ng-if="pvStatus =='FOUND'">
-    <form novalidate name="prep" ng-init="setFormScope(this)">
-      <div class="container">
+    <form novalidate name="prep" class="input-form" novalidate>
+      <div class="">
         <div class="row">
           <div class="col-md-3 arabic">يوجد ختم الهيئة؟
             <input type="checkbox" ng-model="pvTemplate.tampon">
@@ -108,23 +106,18 @@
           </div>
         </div>
         <hr>
-        <div class="row arabic">
-          <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4 arabic">
             <div>أسباب عدم التطابق في ح إن وجد
               <input ng-model='pvTemplate.hReasons' type='text' style="width: 100%;" />
             </div>
           </div>
-        </div>
-        <div class="row arabic">
-          <div class="col-md-12">
+          <div class="col-md-4 arabic">
             <div>أسباب عدم التطابق في ط إن وجد
               <input ng-model='pvTemplate.iReasons' style="width: 100%;" type='text' />
             </div>
           </div>
-
-
         </div>
-
       </div>
       <div class="row arabic">
         <h3>القائمات</h3>
@@ -194,7 +187,7 @@
 
         </div>
         <hr>
-        <div class="row arabic">
+        <div class="row">
           <h3>ممثلي الأحزاب</h3>
 
           <ul class="lists">
@@ -209,7 +202,7 @@
             </li>
           </ul>
         </div>
-        <input type='submit' ng-click='savePv()' ng-disabled="isSaving" />
+        <input type='submit' ng-click='savePv()' class="btn btn-success unique-submit arabic" ng-disabled="isSaving" />
       </div>
     </form>
 

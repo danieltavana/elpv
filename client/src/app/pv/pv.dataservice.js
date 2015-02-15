@@ -14,6 +14,18 @@ angular.module('client.pv',[])
         });
 
       return deferred.promise;
+    },
+    savePv : function(template){
+      var deferred = $q.defer(),
+          httpPromise = $http.post('http://localhost:1337/api/v1/pv/createPv',template);
+
+      httpPromise.then(function(response) {
+        deferred.resolve(response);
+        }, function(error) {
+           deferred.reject(error);
+        });
+
+      return deferred.promise;
     }
 
   }
