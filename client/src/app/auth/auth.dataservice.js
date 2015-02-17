@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pv.auth',[])
+angular.module('pv')
   .factory('Auth',function(){
     return{
       hello:'rad'
