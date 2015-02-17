@@ -1,0 +1,36 @@
+<div class="box-signup">
+  <h3>Enregistrement</h3>
+  <p>
+    Veuillez entrer  votre email et mot de passe pour créer votre compte
+  </p>
+  <form class="form-signup" name="signupForm">
+    <div class="errorHandler alert alert-danger no-display">
+      <i class="fa fa-remove-sign"></i> Erreur
+    </div>
+    <fieldset>
+      <div class="form-group">
+        <span class="input-icon">
+          <input type="email" class="form-control" name="email" placeholder="Email" data-ng-model="credentials.email">
+          <i class="fa fa-envelope"></i> </span>
+        </div>
+        <div class="form-group">
+          <span class="input-icon">
+            <input type="password" class="form-control" id="password" name="password" placeholder="mot de passe" data-ng-model="credentials.password">
+            <i class="fa fa-lock"></i> </span>
+          </div>
+          <div class="form-group">
+            <span class="input-icon">
+              <input type="password" class="form-control" name="password_again" placeholder="confirmation mot de passe ">
+              <i class="fa fa-lock"></i> </span>
+            </div>
+            <div class="form-actions">
+              <a class="btn btn-light-grey go-back">
+                <i class="fa fa-circle-arrow-left"></i> Retour
+              </a>
+              <button type="submit" class="btn btn-primary pull-right" data-ng-click="signup()">
+                Créer  <i class="fa fa-arrow-circle-right"></i>
+              </button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
