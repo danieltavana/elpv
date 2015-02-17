@@ -1,5 +1,5 @@
-angular.module('pv')
-  .factory('LocalStorage', function() {
+angular.module('client.auth',[])
+  .factory('Storage', function() {
     return {
       get: function(key) {
         return localStorage.getItem(key);
