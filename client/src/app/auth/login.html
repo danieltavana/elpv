@@ -3,19 +3,17 @@
     <p>
       Veuillez entrer votre email et mot de passe pour vous connecter
     </p>
-    <form class="form-login" name="loginForm">
-      <div class="errorHandler alert alert-danger no-display">
-        <i class="fa fa-remove-sign"></i>ERREUR
-      </div>
+    <form class="form-login" name="loginForm" novalidate>
+
       <fieldset>
         <div class="form-group">
           <span class="input-icon">
-          <input type="text" class="form-control" name="email" placeholder="Email" data-ng-model="credentials.email">
+          <input type="text" class="form-control" name="email" placeholder="Email" data-ng-model="credentials.email" required>
           <i class="fa fa-user"></i> </span>
         </div>
         <div class="form-group form-actions">
           <span class="input-icon">
-          <input type="password" class="form-control password" name="password" placeholder="Mot de passe " data-ng-model="credentials.password">
+          <input type="password" class="form-control password" name="password" placeholder="Mot de passe " data-ng-model="credentials.password" required>
           <i class="fa fa-lock"></i>
            </span>
         </div>
@@ -26,7 +24,7 @@
         </div>
         <div class="new-account">
           Nouveau?
-          <a href="" class="register">
+          <a  ui-sref='signup' class="signup">
           Créer un compte
           </a>
         </div>

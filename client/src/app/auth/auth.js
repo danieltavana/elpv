@@ -19,7 +19,7 @@ angular.module('client.auth')
     };
 
     $scope.signup = function() {
-      if ($('.form-register').valid()) {
+      if ($scope.signupFrom.$valid ) {
         Auth.signup($scope.credentials);
       }
     };
@@ -42,8 +42,9 @@ angular.module('client.auth')
         password: ''
       };
       $scope.login = function() {
-        if ($('.form-login').valid()) {
+
+        if ( $scope.loginForm.$valid ) {
           Auth.login($scope.credentials);
         }
       };
-    }])
+    }]);

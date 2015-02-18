@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtroller', function ($scope) {
 
-     
+
   });

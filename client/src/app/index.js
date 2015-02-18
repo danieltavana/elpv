@@ -23,7 +23,7 @@ angular.module('client', ['ngAnimate', 'ui.router', 'ui.bootstrap','client.pv','
   .state('home', {
     url: '/home',
     templateUrl: 'app/main/main.html',
-    controller: 'MainCtrl',
+    controller: 'MainCtroller',
     data: {
       access: 0
     }
@@ -34,6 +34,14 @@ angular.module('client', ['ngAnimate', 'ui.router', 'ui.bootstrap','client.pv','
     controller: 'PvController',
     data: {
       access: 1
+    }
+  })
+  .state('review', {
+    url: '/review',
+    templateUrl: 'app/review/review.html',
+    controller: 'ReviewController',
+    data: {
+      access: 0
     }
   });
   $urlRouterProvider.otherwise('/home');

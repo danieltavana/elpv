@@ -46,3 +46,14 @@ ul.lists {
   float: right;
   margin-left: 15px;
 }
+.box-signup, .box-login {
+margin: 10%;
+width: 30%;
+}
+.form-signup,.form-login {
+  border-style: none !important;
+
+}
+.left{
+  direction:ltr !important;
+}
