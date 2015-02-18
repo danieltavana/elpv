@@ -24,7 +24,7 @@ module.exports = {
             twoPv = [],
             validPv = [],
             morePV = [];
-        // refactoring 
+        // refactoring
 
         var arrangepv = function(d) {
                 if (d.length == 0) {
@@ -60,13 +60,13 @@ module.exports = {
                                 if (pvs.length == 1)
                                     onePv.push(pcirc.toString()+'-'+pdeleg+'-'+psubDeleg+'-'+pcenter+'-'+ pstation);
                                 if (pvs.length == 2) {
-                                    if(!pvs[0].valid)
+                                    if(!pvs[0].valid && !pvs[0].corrected  && !pvs[1].corrected)
                                         twoPv.push(pvs);
-                     
+
 
                                 }
                                 process.nextTick(function() {
- 
+
                                     arrangepv(d)
                                 });
 
@@ -91,17 +91,17 @@ module.exports = {
 
 
             }
-            // end refactoring 
+            // end refactoring
         arrangepv(data);
-        
 
-        // end function 
+
+        // end function
     },
     updatePv:function(req,res){
         var pvData = req.body;
         console.log(req.body);
         if(pvData ) {
-            
+
             lists = pvData.lists;
             lists.forEach(function(element,index){
                 Candidate.update({ id: element.id }, { votesCount: element.votesCount })
@@ -111,7 +111,7 @@ module.exports = {
                     else
                         console.log('updated' + cand.id);
                 });
-            
+
             });
                delete pvData.lists;
                 delete pvData.createdAt;
@@ -124,20 +124,20 @@ module.exports = {
                         console.log('error updating');
                     else
                     {   console.log('updated' + pv.id);
-            
+
                         return res.ok(pv);}
-            
+
             });
-            
-            
-            
-        } 
+
+
+
+        }
         else
         return res.badRequest();
-    
-    
-    
-    
+
+
+
+
     }
 
 };

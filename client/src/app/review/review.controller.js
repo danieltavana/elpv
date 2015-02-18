@@ -116,7 +116,7 @@ angular.module('client.pv')
     $http.post('/updatepv', pv)
     .success(function(data) {
       alert('PV mis a jour ');
-      $("#" + pv.id).parents('.pv-row').remove();;
+      //$("#" + pv.id).parents('.pv-row').remove();;
       $('html, body').animate({
         scrollTop: 250
       }, 800);
