@@ -32,7 +32,9 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
   '/suivi': 'SuiviController.match',
-   '/updatepv': 'SuiviController.updatePv'    
+   '/updatepv': 'SuiviController.updatePv',
+   '/pvdetails':'SuiviController.list'
+    
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

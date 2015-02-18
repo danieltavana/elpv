@@ -132,11 +132,21 @@ angular.module('client.pv')
   $scope.getDetails = function(pv, index, parent) {
     console.log(index);
     console.log(parent);
-    $http.post('/api/v1/pv/' + pv)
+    var par={};
+    par.pv = pv;
+    $http.post('/pvdetails' , par)
     .success(function(data) {
       console.log('fetched');
       $scope.pvlist.twopv[parent][index].lists = data.lists;
-
+      $scope.pvlist.twopv[parent][index].lists.sort(function(a, b) {
+        if (a.candidateName < b.candidateName) {
+        return -1;
+        } else if (a.candidateName > b.candidateName) {
+        return 1;
+        }
+        return 0;
+        });
+      $scope.pvlist.twopv[parent][index].listcount =  data.lists.length;
 
     })
     .error(function(data) {

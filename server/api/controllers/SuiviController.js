@@ -5,6 +5,19 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 module.exports = {
+  list:function(req,res){
+
+  var ident= req.body['pv']
+  Pv.find({
+          id:ident
+        }).populate('lists')
+      .exec(function(err, pvs) {
+        console.log(pvs[0]);
+        return res.ok(pvs[0]);
+
+      });
+
+},
     match: function(req, res) {
 
         var circons = req.body['circ'];
