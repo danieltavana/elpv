@@ -31,11 +31,8 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-
-  '/': {
-    view: 'homepage'
-  }
-
+  '/suivi': 'SuiviController.match',
+   '/updatepv': 'SuiviController.updatePv'    
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
