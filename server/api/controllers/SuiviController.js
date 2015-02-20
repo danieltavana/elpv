@@ -73,7 +73,7 @@ module.exports = {
                                 if (pvs.length == 1)
                                     onePv.push(pcirc.toString()+'-'+pdeleg+'-'+psubDeleg+'-'+pcenter+'-'+ pstation);
                                 if (pvs.length == 2) {
-                                    if(!pvs[0].valid)
+                                    if(!pvs[0].valid && !pvs[1].valid)
                                         twoPv.push(pvs);
 
 
