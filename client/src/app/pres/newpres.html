@@ -79,7 +79,7 @@
         </div>
         <hr>
         <div class="row">
-         
+
           <div class="col-md-3 arabic">
             <div>و- عدد أوراق التصويت المستخرجة من الصندوق
               <input ng-model='pvTemplate.fExtractedBallots' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
@@ -124,11 +124,12 @@
         <div class="col-md-6 arabic">
           <span> محمد المنصف المرزوقي</span>
           <input ng-model='pvTemplate.marzouki' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
-
+          </div>
         </div>
+        <hr/>
         <div class="row">
           <div class="col-md-3 arabic">
-            <div>ي- الأصوات المصرح بها لكل القائمات
+            <div>ي- الأصوات المصرح بها
               <input ng-model='pvTemplate.jListVotes' type='number' ng-pattern="/^[0-9]{1,7}$/" required/>
             </div>
           </div>
@@ -176,11 +177,10 @@
         </div>
         <hr>
         <div class="row">
-          <h3>ممثلي الأحزاب</h3>
-
+          <h3>ممثلي المترشحين</h3>
           <ul class="lists">
             <li ng-repeat="signature in signatures" class="list">
-              <select ng-model="signature.list" ng-options="list.name for list in pvTemplate.lists">
+              <select ng-model="signature" ng-options="list.name for list in signatures">
                 Signatures:
                 <input ng-model="signature.signaturesCount"> [
                 <a href ng-click="signatures.splice($index, 1)">X</a>]
@@ -195,7 +195,6 @@
     </form>
 
 
-  </div>
   <div class="footer">
     <p>With ♥ </p>
   </div>

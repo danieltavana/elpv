@@ -6,9 +6,6 @@
 */
 
 module.exports = {
-
-  module.exports = {
-
     attributes: {
         circonscriptionId:{
             type:'integer',
@@ -73,7 +70,7 @@ module.exports = {
             type:'integer',
             required:true,
         },
-     
+
         fExtractedBallots :{
             type:'integer',
             required:true,

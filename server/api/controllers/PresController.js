@@ -6,6 +6,7 @@
  */
 
 module.exports = {
+
 	preparePv: function (req, res) {
 		var circ = parseInt(req.body.circ),
 			deleg = parseInt(req.body.deleg),
@@ -36,8 +37,8 @@ module.exports = {
 			return res.badRequest('polling center not existing in our database , verify that your request has the correct values');
 	//	var listFile = 'assets/data/lists/' + circ.toString() + '.json';
 		//var lists = JSON.parse(fs.readFileSync(listFile, 'utf8'));
-		if (lists == undefined)
-			return res.badRequest('not lists Found ,please contact the admin ');
+		//if (lists == undefined)
+		//	return res.badRequest('not lists Found ,please contact the admin ');
 		var template = {
 			circ: circ,
 			deleg: deleg,

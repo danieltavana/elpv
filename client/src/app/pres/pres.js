@@ -54,7 +54,7 @@ angular.module('client.pv')
       });
 
     };
-    $scope.signatures = [];
+    $scope.signatures = [{"name":"sebsi"},{"name":"marzouki"}];
     $scope.elections = [
       'Legislatives',
       'pres round1',
