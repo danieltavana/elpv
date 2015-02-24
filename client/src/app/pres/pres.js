@@ -43,7 +43,9 @@ angular.module('client.pv')
          $('html, body').animate({
             scrollTop: 0
         }, 800);
-
+        $scope.pvTemplate={};
+        $scope.pvStatus='INITILIAZED';
+        $scope.isSaving = false;
       },function(error){
         $scope.message='error saving';
         $scope.isSaving = false;
