@@ -73,10 +73,7 @@ module.exports = {
             type:'integer',
             required:true,
         },
-      eCplusD :{
-            type:'integer',
-            required:true,
-        },
+     
         fExtractedBallots :{
             type:'integer',
             required:true,

@@ -68,7 +68,6 @@ module.exports = {
 			bDeliveredBallots: pvData.bDeliveredBallots,
 			cSpoiledBallots: pvData.cSpoiledBallots,
 			dLeftBallots: pvData.dLeftBallots,
-			eCplusD: pvData.eCplusD,
 			fExtractedBallots: pvData.fExtractedBallots,
 			gEplusF: pvData.gEplusF,
 			hBminusG: pvData.hBminusG,
