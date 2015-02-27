@@ -110,6 +110,67 @@ module.exports = {
 
         // end function
     },
+    missing:function(req,res) {
+
+              var fs = require("fs"),
+                  filepath = './assets/data/pc-full.json',
+                  file = fs.readFileSync(filepath, 'utf8');
+              //Test here for file existence .
+              var data = JSON.parse(file);
+              var found = false;
+              var l = data.length,
+                  noPv = [],
+                  onePv = [],
+                  twoPv = [],
+                  validPv = [],
+                  morePV = [];
+              // refactoring
+
+                      var arrangepv = function(d) {
+                               if (d.length == 0) {
+                                console.log(noPv);
+                                  return res.ok({
+                                      nopv: noPv
+                                  });
+                              } else {
+                                  var pv = d.pop();
+                                  var pvId = pv.number.toString();
+                                  if (pvId.length == 10)
+                                      pvId = '0' + pvId;
+                                  var pcirc = parseInt(pvId.substr(0, 2)),
+                                      pdeleg = parseInt(pvId.substr(2, 2)),
+                                      psubDeleg = parseInt(pvId.substr(4, 2)),
+                                      pcenter = parseInt(pvId.substr(6, 3)),
+                                      pstation = parseInt(pvId.substr(9, 2));
+
+                                      Pv.find({
+                                              circonscriptionId: pcirc,
+                                              delegationId: pdeleg,
+                                              subDelegationId: psubDeleg,
+                                              centerID: pcenter,
+                                              stationId: pstation
+                                              })
+                                          .exec(function(err, pvs) {
+
+                                              if (pvs.length == 0){
+                                                noPv.push(pv);
+                                              }
+                                                  //noPv.push(pcirc.toString()+'-'+pdeleg+'-'+psubDeleg+'-'+pcenter+'-'+ pstation);
+
+                                              process.nextTick(function() {
+
+                                                  arrangepv(d)
+                                              });
+
+                                          });
+                              }
+                          }
+                          // end refactoring
+                          process.nextTick(function() {
+
+                              arrangepv(data)
+                          });
+    },
     updatePv:function(req,res){
         var pvData = req.body;
         console.log(req.body);
