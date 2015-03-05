@@ -59,7 +59,7 @@ module.exports = {
                         pstation = parseInt(pvId.substr(9, 2));
 
                     if (pcirc == c_id) {
-                        Pv.find({
+                        Pres.find({
                                 circonscriptionId: pcirc,
                                 delegationId: pdeleg,
                                 subDelegationId: psubDeleg,
@@ -73,7 +73,7 @@ module.exports = {
                                 if (pvs.length == 1)
                                     onePv.push(pcirc.toString()+'-'+pdeleg+'-'+psubDeleg+'-'+pcenter+'-'+ pstation);
                                 if (pvs.length == 2) {
-                                    if(!pvs[0].valid && !pvs[1].valid)
+                                    if( pvs[0].marzouki !=pvs[1].marzouki || pvs[0].sebsi !=pvs[1].sebsi || pvs[0].nFminusM !=pvs[1].nFminusM || pvs[0].mJplusKplusL !=pvs[1].mJplusKplusL || pvs[0].lBlankVotes !=pvs[1].lBlankVotes || pvs[0].kCancelledVotes !=pvs[1].kCancelledVotes || pvs[0].jListVotes !=pvs[1].jListVotes || pvs[0].iAminusF !=pvs[1].iAminusF || pvs[0].hBminusG !=pvs[1].hBminusG || pvs[0].gEplusF !=pvs[1].gEplusF || pvs[0].registeredVoters !=pvs[1].registeredVoters || pvs[0].aSigningVoters != pvs[1].aSigningVoters || pvs[0].bDeliveredBallots != pvs[1].bDeliveredBallots || pvs[0].cSpoiledBallots != pvs[1].cSpoiledBallots  || pvs[0].dLeftBallots != pvs[1].dLeftBallots || pvs[0].fExtractedBallots != pvs[1].fExtractedBallots )
                                         twoPv.push(pvs);
 
 
@@ -176,23 +176,11 @@ module.exports = {
         console.log(req.body);
         if(pvData ) {
 
-            lists = pvData.lists;
-            lists.forEach(function(element,index){
-                Candidate.update({ id: element.id }, { votesCount: element.votesCount })
-            .exec(function(err, cand) {
-                    if(err)
-                        console.log('error updating');
-                    else
-                        console.log('updated' + cand.id);
-                });
 
-            });
-               delete pvData.lists;
                 delete pvData.createdAt;
                 delete pvData.updatedAt;
-                delete pvData.partySingatures;
                 pvData.corrected = true;
-            Pv.update({ id: pvData.id}, pvData)
+            Pres.update({ id: pvData.id}, pvData)
             .exec(function(err, pv) {
                   if(err)
                         console.log('error updating');
