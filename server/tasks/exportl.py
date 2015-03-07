@@ -1,3 +1,6 @@
+#!/usr/local/bin/python
+# coding: utf-8
+
 import urllib2
 from string import maketrans
 from string import whitespace
@@ -20,7 +23,10 @@ def addHeader( id,circ ):
                 'countingEnd','tampon']
     partyLists = id['lists']
     for item in partyLists:
-        headerRow.append(item['candidateName'].encode("UTF-8"))
+        candidateName = item['candidateName'].encode("UTF-8")
+
+        newName = normaliseName(candidateName)
+        headerRow.append(newName)
     headerRow.append('observers')
     f.writerow(headerRow)
     return
@@ -48,9 +54,15 @@ def addData( id,circ ):
                 id['lBlankVotes'],
                 id['mJplusKplusL'],
                 id['nFminusM'],
-                id['countingStart'],
-                id['countingEnd'],
-                id['tampon']]
+                id.get('tampon','False')]
+    if id['countingStart'] != None:
+        dataRow.append(id['countingStart'].encode("UTF-8"))
+    else:
+        dataRow.append('')
+    if id['countingEnd'] != None:
+        dataRow.append(id['countingEnd'].encode("UTF-8"))
+    else:
+        dataRow.append('')
 
     for item in partyLists:
         dataRow.append(item['votesCount'])
@@ -58,13 +70,131 @@ def addData( id,circ ):
     tmp=''
     for item in id['partySingatures']:
 
-        sigName= item.get('name','').encode("UTF-8")
-        sigCount= item.get('signaturesCount','').encode("UTF-8")
+        sigName= item.get('name','')
+        sigCount= item.get('signaturesCount','')
         tmp = tmp + sigName + ':' + sigCount +'  '
 
-    dataRow.append(tmp)
-    f.writerow(dataRow)
+    dataRow.append(tmp.encode('utf8', 'replace'))
+    try:
+        f.writerow(dataRow)
+    except UnicodeEncodeError:
+        print dataRow
     return
+def normaliseName (name):
+
+    if name ==' قائمة  افاق تونس':
+
+        newName = 'آفاق تونس'
+        return newName
+    elif name =='افاق تونس':
+
+        newName = 'آفاق تونس'
+        return newName
+    elif name ==' قائمة  افاق تونس':
+
+        newName = 'آفاق تونس'
+        return newName
+    elif name ==' أفاق تونس':
+
+        newName = 'آفاق تونس'
+        return newName
+    elif name ==' قائمة  افاق تونس ':
+
+        newName = 'آفاق تونس'
+        return newName
+    elif name =='افاق تونس':
+
+        newName = 'آفاق تونس'
+        return newName
+    elif name =='الأتحاد الوطني الحر':
+
+        newName = 'الاتحاد الوطني الحر'
+        return newName
+    elif name ==' قائمة حزب الاتحاد الوطنى الحر':
+
+        newName = 'الاتحاد الوطني الحر'
+        return newName
+    elif name ==' قائمة الإتحاد الوطني الحرّ':
+
+        newName = 'الاتحاد الوطني الحر'
+        return newName
+    elif name =='اتحاد الوطني الحر':
+
+        newName = 'الاتحاد الوطني الحر'
+        return newName
+    elif name ==' قائمة حزب الاتحاد الوطنلا الحر':
+
+        newName = 'الاتحاد الوطني الحر'
+        return newName
+    elif name =='الإتحاد الوطني الحر':
+
+        newName = 'الاتحاد الوطني الحر'
+        return newName
+    elif name =='قائمة الجبهة الشعبية':
+
+        newName ='الجبهة الشعبية'
+        return newName
+    elif name ==' الجبهة الشعبية':
+
+        newName ='الجبهة الشعبية'
+        return newName
+    elif name ==' قائمة الجبهة الشعبية':
+
+        newName ='الجبهة الشعبية'
+        return newName
+    elif name ==' الجبهة الشعبية ':
+
+        newName ='الجبهة الشعبية'
+        return newName
+
+    elif name ==' قائمة حزب حركة النهضة ':
+
+        newName ='حركة النهضة'
+        return newName
+    elif name ==' حزب حركة النهضة':
+
+        newName ='حركة النهضة'
+        return newName
+    elif name =='قائمة حزب حركة النهضة':
+
+        newName ='حركة النهضة'
+        return newName
+    elif name =='حزب حركة النهضة':
+
+        newName ='حركة النهضة'
+        return newName
+    elif name ==' حركة النهضة ':
+
+        newName ='حركة النهضة'
+        return newName
+
+    elif name =='نداء تونس':
+
+        newName ='حركة نداء تونس'
+        return newName
+    elif name =='نداء تونس ':
+
+        newName ='حركة نداء تونس'
+        return newName
+    elif name ==' قائمة حركة نداء تونس':
+
+        newName ='حركة نداء تونس'
+        return newName
+    elif name ==' حركة نداء تونس':
+
+        newName ='حركة نداء تونس'
+        return newName
+    elif name ==' نداء تونس':
+
+        newName ='حركة نداء تونس'
+        return newName
+    elif name ==' حركة نداء تونس ':
+
+        newName ='حركة نداء تونس'
+        return newName
+    else:
+        return name
+
 
 def exportCirc( circ ):
     r = requests.get("http://localhost:1337/legislatives/list/" + str(circ))
