@@ -13,8 +13,9 @@ def readPv( id ):
     source_url = "http://localhost:1337/pv/" + id
     response = urllib2.urlopen(source_url).read()
     return response
-def addHeader( id ):
-    f = csv.writer(open("nabeul.csv", "wb+"))
+def addHeader( id,circ ):
+    filename= '../exports/legislatives/'+ str(circ) + '.csv'
+    f = csv.writer(open(filename, "wb+"))
     headerRow= ['circonscriptionId','delegationId','subDelegationId','centerID','stationId','registeredVoters','aSigningVoters','bDeliveredBallots','cSpoiledBallots','dLeftBallots','eCplusD','fExtractedBallots','gEplusF','hBminusG','iAminusF','jListVotes','kCancelledVotes','lBlankVotes','mJplusKplusL','nFminusM','countingStart',
                 'countingEnd','tampon']
     partyLists = id['lists']
@@ -23,8 +24,9 @@ def addHeader( id ):
     headerRow.append('observers')
     f.writerow(headerRow)
     return
-def addData( id ):
-    f = csv.writer(open("nabeul.csv", "ab+"))
+def addData( id,circ ):
+    filename= '../exports/legislatives/' + str(circ) + '.csv'
+    f = csv.writer(open(filename, "ab+"))
     partyLists = id['lists']
     dataRow=[id['circonscriptionId'],
                 id['delegationId'],
@@ -64,14 +66,18 @@ def addData( id ):
     f.writerow(dataRow)
     return
 
-# getting the list of pvs in nabeul
-r = requests.get("http://localhost:1337/legislatives/list/11")
-pvList= r.json()['pvlist']
+def exportCirc( circ ):
+    r = requests.get("http://localhost:1337/legislatives/list/" + str(circ))
+    pvList= r.json()['pvlist']
 
-pvDetails = readPv(pvList[0])
-pvv = json.loads(pvDetails)
-addHeader(pvv)
-for pv in pvList:
-    pvDetails= readPv(pv)
+    pvDetails = readPv(pvList[0])
     pvv = json.loads(pvDetails)
-    addData(pvv)
+    addHeader(pvv,circ)
+    for pv in pvList:
+        pvDetails= readPv(pv)
+        pvv = json.loads(pvDetails)
+        addData(pvv,circ)
+    return
+
+for i in range(1,27):
+    exportCirc(i)
