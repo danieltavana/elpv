@@ -53,6 +53,85 @@ module.exports = {
 		return res.ok(template);
 
 	},
+	pretty: function(req,res) {
+		Pres.findOne(req.params.id)
+.exec(function (err,pv) {
+	if(err)
+	return res.serverError(err);
+	return res.ok(pv);
+});
+	},
+	export: function(req,res) {
+		var circ = parseInt(req.params.id);
+		if(circ){
+			var fs = require("fs"),
+					filepath = './assets/data/pc.json',
+					file = fs.readFileSync(filepath, 'utf8');
+			var pvList=[];
+			//Test here for file existence .
+			var data = JSON.parse(file);
+
+			var arrangepv = function(d) {
+							if (d.length == 0) {
+
+									return res.ok({
+
+											pvlist: pvList
+									});
+							} else {
+									var pv = d.pop();
+									var pvId = pv.number.toString();
+									if (pvId.length == 10)
+											pvId = '0' + pvId;
+									var pcirc = parseInt(pvId.substr(0, 2)),
+											pdeleg = parseInt(pvId.substr(2, 2)),
+											psubDeleg = parseInt(pvId.substr(4, 2)),
+											pcenter = parseInt(pvId.substr(6, 3)),
+											pstation = parseInt(pvId.substr(9, 2));
+
+									if (pcirc == circ) {
+											Pres.find({
+															circonscriptionId: pcirc,
+															delegationId: pdeleg,
+															subDelegationId: psubDeleg,
+															centerID: pcenter,
+															stationId: pstation
+															})
+													.exec(function(err, pvs) {
+
+															if (pvs.length == 2) {
+
+																		if (pvs[0].partySingatures.length > pvs[1].partySingatures.length)
+																		pvList.push(pvs[0].id);
+																		else
+																		pvList.push(pvs[1].id);
+															}
+															process.nextTick(function() {
+
+																	arrangepv(d)
+															});
+
+													});
+
+									} else {
+
+											process.nextTick(function() {
+													arrangepv(d)
+											});
+
+									}
+
+							}
+
+					}
+					// end refactoring
+			arrangepv(data)
+
+		}
+		else
+		return res.badRequest('missing circonscription');
+
+	},
 	createPv: function (req, res) {
 		var pvData = req.body;
 
