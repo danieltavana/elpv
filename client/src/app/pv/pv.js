@@ -54,6 +54,63 @@ angular.module('client.pv')
       });
 
     };
+    $scope.loadPv = function(){
+      console.log('loading');
+      var promise = PvDataService.loadPv($scope.pvTemplate);
+      promise.then (function(response){
+        $scope.pvStatus='FOUND';
+        $scope.message='';
+
+        $scope.pvTemplate = response.data;
+
+
+        $scope.pvTemplate.circ=response.data.circonscriptionId;
+        $scope.pvTemplate.deleg=response.data.delegationId;
+        $scope.pvTemplate.subDeleg=response.data.subDelegationId;
+        $scope.pvTemplate.center=response.data.centerID;
+        $scope.pvTemplate.station=response.data.stationId;
+        delete $scope.pvTemplate.circonscriptionId;
+        delete $scope.pvTemplate.delegationId;
+        delete $scope.pvTemplate.subDelegationId;
+        delete $scope.pvTemplate.centerID;
+        delete $scope.pvTemplate.stationId;
+        console.log($scope.pvTemplate);
+        },
+      function(error) {
+          $scope.message= 'ERROR: ' + error.data;
+          $scope.pvStatus='NOTFOUND';
+      });
+    };
+    $scope.updatePv = function(id){
+      var promise = PvDataService.updatePv($scope.pvTemplate);
+      promise.then (function(response){
+        $scope.pvStatus='FOUND';
+        $scope.message='';
+        $scope.pvTemplate = response.data;
+        $scope.pvTemplate.circ=response.data.circonscriptionId;
+        $scope.pvTemplate.deleg=response.data.delegationId;
+        $scope.pvTemplate.subDeleg=response.data.subDelegationId;
+        $scope.pvTemplate.center=response.data.centerID;
+        $scope.pvTemplate.station=response.data.stationId;
+
+        $('html, body').animate({
+                scrollTop: 0
+            }, 800);
+        $scope.pvTemplate={};
+        $scope.message= 'Updated ';
+        $scope.pvStatus='NOTFOUND';
+
+        },
+      function(error) {
+        $('html, body').animate({
+                scrollTop: 0
+            }, 800);
+        $scope.pvTemplate={};
+          $scope.message= 'ERROR: ' + error.data;
+          $scope.pvStatus='NOTFOUND';
+       });
+
+    };
     $scope.signatures = [];
     $scope.elections = [
       'Legislatives',

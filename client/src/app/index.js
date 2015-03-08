@@ -36,6 +36,22 @@ angular.module('client', ['ngAnimate', 'ui.router', 'ui.bootstrap','client.pv','
       access: 1
     }
   })
+  .state('updatel',{
+    url:'/updatel',
+    templateUrl:'app/pv/update.html',
+    controller: 'PvController',
+    data: {
+      access: 1
+    }
+  })
+  .state('updatep',{
+    url:'/updatep',
+    templateUrl:'app/pres/update.html',
+    controller: 'PresController',
+    data: {
+      access: 1
+    }
+  })
   .state('pres', {
     url: '/presidentielles',
     templateUrl: 'app/pres/newpres.html',
