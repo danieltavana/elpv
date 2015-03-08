@@ -58,7 +58,7 @@ angular.module('client.pv',[])
         });
 
       return deferred.promise;
-    },
+    }
 
   }
 

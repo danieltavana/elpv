@@ -53,6 +53,48 @@ module.exports = {
 		return res.ok(template);
 
 	},
+	loadPv: function(req,res){
+		var circ = parseInt(req.body.circ),
+			deleg = parseInt(req.body.deleg),
+			subDeleg = parseInt(req.body.subDeleg),
+			center = parseInt(req.body.center),
+			station = parseInt(req.body.station);
+		if (circ == undefined || deleg == undefined || subDeleg == undefined || center == undefined || station == undefined)
+			return res.badRequest('polling center indentifiers are missing from request body ');
+			Pres.find({
+							circonscriptionId: circ,
+							delegationId: deleg,
+							subDelegationId: subDeleg,
+							centerID: center,
+							stationId: station
+							})
+					.exec(function(err, pvs) {
+						if (err)
+						return res.badRequest('Erreur serveur ');
+						if(pvs.length<2)
+						return res.badRequest('PV non trouve , ou Pv saisi une seule fois ')
+						else
+						{
+							if(pvs[0].partySingatures.length > pvs[1].partySingatures.length)
+							return res.ok(pvs[0]);
+							else
+							return res.ok(pvs[1])
+						}
+
+					});
+
+	},
+	updatepv: function(req,res){
+		var id= req.body.id;
+		Pres.update({id:id},req.body)
+		.exec(function (err,pv) {
+			if(err)
+			return res.serverError(err);
+
+
+		return res.ok(pv);
+		})
+	},
 	pretty: function(req,res) {
 		Pres.findOne(req.params.id)
 .exec(function (err,pv) {
