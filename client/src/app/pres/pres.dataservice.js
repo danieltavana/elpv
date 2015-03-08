@@ -29,7 +29,7 @@ angular.module('client.pv')
     },
     loadPv: function(template){
       var deferred = $q.defer(),
-          httpPromise = $http.post('http://localhost:1337/api/v1/pres/loadPv',template);
+          httpPromise = $http.post('api/v1/pres/loadPv',template);
 
       httpPromise.then(function(response) {
         deferred.resolve(response);
@@ -45,12 +45,12 @@ angular.module('client.pv')
       delete template.subDeleg;
       delete template.center;
       delete template.station;
-     
+
 
 
       var deferred = $q.defer(),
 
-          httpPromise = $http.post('http://localhost:1337/api/v1/pres/updatePv',template);
+          httpPromise = $http.post('api/v1/pres/updatePv',template);
 
       httpPromise.then(function(response) {
         deferred.resolve(response);

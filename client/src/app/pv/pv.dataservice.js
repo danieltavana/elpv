@@ -5,7 +5,7 @@ angular.module('client.pv',[])
   return{
     getPv :function(id){
       var deferred = $q.defer(),
-          httpPromise = $http.post('http://localhost:1337/api/v1/pv/preparePv',id);
+          httpPromise = $http.post('api/v1/pv/preparePv',id);
 
       httpPromise.then(function(response) {
         deferred.resolve(response);
@@ -17,7 +17,7 @@ angular.module('client.pv',[])
     },
     savePv : function(template){
       var deferred = $q.defer(),
-          httpPromise = $http.post('http://localhost:1337/api/v1/pv/createPv',template);
+          httpPromise = $http.post('api/v1/pv/createPv',template);
 
       httpPromise.then(function(response) {
         deferred.resolve(response);
@@ -29,7 +29,7 @@ angular.module('client.pv',[])
     },
     loadPv: function(template){
       var deferred = $q.defer(),
-          httpPromise = $http.post('http://localhost:1337/api/v1/pv/loadPv',template);
+          httpPromise = $http.post('api/v1/pv/loadPv',template);
 
       httpPromise.then(function(response) {
         deferred.resolve(response);
@@ -49,7 +49,7 @@ angular.module('client.pv',[])
 
       var deferred = $q.defer(),
 
-          httpPromise = $http.post('http://localhost:1337/api/v1/pv/updatePv',template);
+          httpPromise = $http.post('api/v1/pv/updatePv',template);
 
       httpPromise.then(function(response) {
         deferred.resolve(response);
