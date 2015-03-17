@@ -8,6 +8,7 @@ import csv
 import time
 import json
 import requests
+import copy
 
 
 
@@ -16,6 +17,42 @@ def readPv( id ):
     source_url = "http://localhost:1337/pv/" + id
     response = urllib2.urlopen(source_url).read()
     return response
+def createApi(elpv):
+    token = 'KWrxiDejXLkZ2kGcE9oLmclHxmsatK5hTtiTbDKTGsgZAppGplmzDXVEjX0EW4PU'
+    api_url = 'http://localhost:3000/api/legislatives'
+    pv = elpv
+    partyLists = pv['lists']
+    payload = {"PollingCenterName": pv['PollingCenterName'],
+	"aSigningVoters": pv['aSigningVoters'],
+    "bDeliveredBallots": pv['bDeliveredBallots'],
+    "cSpoiledBallots": pv['cSpoiledBallots'],
+    "centerID": pv['centerID'],
+    "circonscriptionId": pv['circonscriptionId'],
+    "dLeftBallots": pv['dLeftBallots'],
+    "delegationId": pv['delegationId'],
+    "fExtractedBallots": pv['fExtractedBallots'],
+    "kCancelledVotes": pv['kCancelledVotes'],
+    "lBlankVotes": pv['lBlankVotes'],
+    "registeredVoters": pv['registeredVoters'],
+    "stationId": pv['stationId'],
+    "subDelegationId": pv['subDelegationId']}
+    r = requests.post(api_url + '?access_token=' + token , data=payload)
+    pvId= r.json()['id']
+    # adding lists
+    list_post_url= api_url+ '/' + pvId+'/lists?access_token='+ token
+    print (len(partyLists))
+    for item in partyLists:
+        candidateName = item['candidateName'].encode("UTF-8")
+        newName = normaliseName(candidateName)
+        list_payload= {"listName": newName,"votes":item['votesCount'] }
+        l = requests.post(list_post_url, data=list_payload)
+        print len(l.json())
+    print ('End for')
+    print (pvId)
+    #print r.json()
+
+    return
+
 def addHeader( id,circ ):
     filename= '../exports/legislatives/'+ str(circ) + '.csv'
     f = csv.writer(open(filename, "wb+"))
@@ -75,6 +112,7 @@ def addData( id,circ ):
         tmp = tmp + sigName + ':' + sigCount +'  '
 
     dataRow.append(tmp.encode('utf8', 'replace'))
+
     try:
         f.writerow(dataRow)
     except UnicodeEncodeError:
@@ -207,7 +245,7 @@ def exportCirc( circ ):
         pvDetails= readPv(pv)
         pvv = json.loads(pvDetails)
         addData(pvv,circ)
+        createApi(pvv)
     return
-
 for i in range(1,28):
     exportCirc(i)

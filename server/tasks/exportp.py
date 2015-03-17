@@ -13,6 +13,29 @@ def readPv( id ):
     source_url = "http://localhost:1337/pres/" + id
     response = urllib2.urlopen(source_url).read()
     return response
+def createApi(elpv):
+    token = 'KWrxiDejXLkZ2kGcE9oLmclHxmsatK5hTtiTbDKTGsgZAppGplmzDXVEjX0EW4PU'
+    api_url = 'http://localhost:3000/api/presidentielles?access_token=' + token
+    pv = elpv
+    payload = {"PollingCenterName": pv['PollingCenterName'],
+	"aSigningVoters": pv['aSigningVoters'],
+    "bDeliveredBallots": pv['bDeliveredBallots'],
+    "cSpoiledBallots": pv['cSpoiledBallots'],
+    "centerID": pv['centerID'],
+    "circonscriptionId": pv['circonscriptionId'],
+    "dLeftBallots": pv['dLeftBallots'],
+    "delegationId": pv['delegationId'],
+    "fExtractedBallots": pv['fExtractedBallots'],
+    "kCancelledVotes": pv['kCancelledVotes'],
+    "lBlankVotes": pv['lBlankVotes'],
+    "registeredVoters": pv['registeredVoters'],
+    "stationId": pv['stationId'],
+    "subDelegationId": pv['subDelegationId'],
+    "sebsiVotes": pv['sebsi'],
+    "marzoukiVotes":pv['marzouki']}
+    r = requests.post(api_url, data=payload)
+    print r.json()['id']
+    return
 def addHeader( id,circ ):
     filename= '../exports/presidentielles/'+ str(circ) + '.csv'
     f = csv.writer(open(filename, "wb+"))
@@ -71,6 +94,7 @@ def exportCirc( circ ):
         pvDetails= readPv(pv)
         pvv = json.loads(pvDetails)
         addData(pvv,circ)
+        createApi(pvv)
     return
 
 for i in range(1,28):
