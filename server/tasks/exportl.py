@@ -18,7 +18,7 @@ def readPv( id ):
     response = urllib2.urlopen(source_url).read()
     return response
 def createApi(elpv):
-    token = 'cA482JjohBSJDIC3eGbSB3AabI9KjmAOE1Kdb6qbov00fToHyVAdByNoD7XjsDCI'
+    token = 'Rar9W0UQhWS4O9JYzqCDF146uF12uc9OSFWMg07Gf506BHgCRert8Hc2NnVWQHdh'
     api_url = 'http://localhost:3000/api/legislatives'
     pv = elpv
     partyLists = pv['lists']
