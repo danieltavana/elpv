@@ -14,7 +14,7 @@ def readPv( id ):
     response = urllib2.urlopen(source_url).read()
     return response
 def createApi(elpv):
-    token = 'KWrxiDejXLkZ2kGcE9oLmclHxmsatK5hTtiTbDKTGsgZAppGplmzDXVEjX0EW4PU'
+    token = 'cA482JjohBSJDIC3eGbSB3AabI9KjmAOE1Kdb6qbov00fToHyVAdByNoD7XjsDCI'
     api_url = 'http://localhost:3000/api/presidentielles?access_token=' + token
     pv = elpv
     payload = {"PollingCenterName": pv['PollingCenterName'],
@@ -34,7 +34,7 @@ def createApi(elpv):
     "sebsiVotes": pv['sebsi'],
     "marzoukiVotes":pv['marzouki']}
     r = requests.post(api_url, data=payload)
-    print r.json()['id']
+    #print r.json()['id']
     return
 def addHeader( id,circ ):
     filename= '../exports/presidentielles/'+ str(circ) + '.csv'

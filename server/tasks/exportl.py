@@ -18,7 +18,7 @@ def readPv( id ):
     response = urllib2.urlopen(source_url).read()
     return response
 def createApi(elpv):
-    token = 'KWrxiDejXLkZ2kGcE9oLmclHxmsatK5hTtiTbDKTGsgZAppGplmzDXVEjX0EW4PU'
+    token = 'cA482JjohBSJDIC3eGbSB3AabI9KjmAOE1Kdb6qbov00fToHyVAdByNoD7XjsDCI'
     api_url = 'http://localhost:3000/api/legislatives'
     pv = elpv
     partyLists = pv['lists']
@@ -40,15 +40,15 @@ def createApi(elpv):
     pvId= r.json()['id']
     # adding lists
     list_post_url= api_url+ '/' + pvId+'/lists?access_token='+ token
-    print (len(partyLists))
+    #print (len(partyLists))
     for item in partyLists:
         candidateName = item['candidateName'].encode("UTF-8")
         newName = normaliseName(candidateName)
         list_payload= {"listName": newName,"votes":item['votesCount'] }
         l = requests.post(list_post_url, data=list_payload)
         print len(l.json())
-    print ('End for')
-    print (pvId)
+    #print ('End for')
+    #print (pvId)
     #print r.json()
 
     return
